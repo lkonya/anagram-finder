@@ -1,4 +1,4 @@
-# Anagram-finder [![CI](https://github.com/lkonya/anagram-finder/workflows/ci/badge.svg)](https://github.com/lkonya/anagram-finder/actions)
+# Anagram-finder [![Tests Actions Status](https://github.com/lkonya/anagram-finder/workflows/CI/badge.svg)](https://github.com/lkonya/anagram-finder/actions)
 
 ## Prerequisites
 This project requires at least Java 11 or newer. (The easiest way to get JDK 11 with [asdf](https://asdf-vm.com/#/core-manage-asdf) or [sdk](https://sdkman.io/install)))
