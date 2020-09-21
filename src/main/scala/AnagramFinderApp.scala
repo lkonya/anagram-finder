@@ -1,9 +1,9 @@
 import java.nio.file.{Path, Paths}
 
-import anagram.service.AnagramFinder.LookUpTable
-import anagram.service.{AnagramFinder, Console}
 import cats.effect.concurrent.Ref
 import cats.effect.{Blocker, ContextShift, ExitCode, IO, IOApp, Sync}
+import com.github.lkonya.anagramFinder.service.AnagramFinder.LookUpTable
+import com.github.lkonya.anagramFinder.service.{AnagramFinder, Console}
 
 object AnagramFinderApp extends IOApp {
   import cats.syntax.applicative._

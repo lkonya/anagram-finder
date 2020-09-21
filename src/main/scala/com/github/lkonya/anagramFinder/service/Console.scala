@@ -1,4 +1,4 @@
-package anagram.service
+package com.github.lkonya.anagramFinder.service
 
 import cats.effect.Sync
 

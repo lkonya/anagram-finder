@@ -1,13 +1,13 @@
-package anagram.service
+package com.github.lkonya.anagramFinder.service
 
 import java.io.IOException
 import java.nio.file.{Files, Path, Paths}
 
-import anagram.model.SortedCaseInsensitiveString
-import anagram.service.AnagramFinder.LookUpTable
 import cats.data.NonEmptyChain
 import cats.effect.concurrent.Ref
 import cats.effect.{Blocker, Bracket, ContextShift, IO}
+import com.github.lkonya.anagramFinder.model.SortedLowerCasedString
+import com.github.lkonya.anagramFinder.service.AnagramFinder.LookUpTable
 import org.scalactic.TypeCheckedTripleEquals
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
@@ -16,7 +16,7 @@ class AnagramFinderTest extends AnyWordSpecLike with Matchers with TypeCheckedTr
   import cats.syntax.foldable._
   private val word                          = "he"
   private val anagrams                      = NonEmptyChain("eh", "eH", "Eh", "EH", "he", "hE", "He", "HE")
-  private val lookUpTable                   = Map(SortedCaseInsensitiveString(word) -> anagrams)
+  private val lookUpTable                   = Map(SortedLowerCasedString(word) -> anagrams)
   private val emptyLookUpTable: LookUpTable = Map.empty
 
   "lookUpAnagram" should {

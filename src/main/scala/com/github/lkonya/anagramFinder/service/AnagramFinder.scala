@@ -1,12 +1,12 @@
-package anagram.service
+package com.github.lkonya.anagramFinder.service
 
 import java.io.{BufferedReader, File, FileReader}
 import java.nio.file.Path
 
-import anagram.model.SortedCaseInsensitiveString
 import cats.data.NonEmptyChain
 import cats.effect.concurrent.Ref
 import cats.effect.{Blocker, ContextShift, Resource, Sync}
+import com.github.lkonya.anagramFinder.model.SortedLowerCasedString
 
 import scala.annotation.tailrec
 import scala.collection.mutable
@@ -15,13 +15,13 @@ object AnagramFinder {
   import cats.syntax.flatMap._
   import cats.syntax.functor._
 
-  type LookUpTable = Map[SortedCaseInsensitiveString, NonEmptyChain[String]]
-
   import scala.jdk.CollectionConverters._
+
+  type LookUpTable = Map[SortedLowerCasedString, NonEmptyChain[String]]
 
   def lookUpAnagram[F[_]: Sync](word: String)(implicit
       lookUpTableRef: Ref[F, LookUpTable]): F[Option[NonEmptyChain[String]]] =
-    lookUpTableRef.get.map(_.get(SortedCaseInsensitiveString(word)))
+    lookUpTableRef.get.map(_.get(SortedLowerCasedString(word)))
 
   def createLookUpTable[F[_]: Sync: ContextShift: Console](filePath: Path, blocker: Blocker): F[Ref[F, LookUpTable]] =
     for {
@@ -41,10 +41,10 @@ object AnagramFinder {
     @tailrec
     def createLookUpTable(
         words: List[String],
-        lookUpTable: mutable.HashMap[SortedCaseInsensitiveString, NonEmptyChain[String]]): LookUpTable =
+        lookUpTable: mutable.HashMap[SortedLowerCasedString, NonEmptyChain[String]]): LookUpTable =
       words match {
         case word :: tail =>
-          val key = SortedCaseInsensitiveString(word)
+          val key = SortedLowerCasedString(word)
           lookUpTable.get(key) match {
             case Some(words) => lookUpTable.update(key, words :+ word)
             case None        => lookUpTable.put(key, NonEmptyChain(word))
