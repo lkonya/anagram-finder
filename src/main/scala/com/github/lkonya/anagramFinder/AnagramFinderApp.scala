@@ -1,4 +1,6 @@
-import java.nio.file.{Path, Paths}
+package com.github.lkonya.anagramFinder
+
+import java.nio.file.Paths
 
 import cats.effect.concurrent.Ref
 import cats.effect.{Blocker, ContextShift, ExitCode, IO, IOApp, Sync}
@@ -17,17 +19,18 @@ object AnagramFinderApp extends IOApp {
     args match {
       case fileLocation :: _ =>
         Blocker[IO]
-          .use(program[IO](Paths.get(fileLocation)))
+          .use(program[IO](fileLocation))
           .as(ExitCode.Success)
-          .handleErrorWith(error => Console[IO].putStrLn(error.toString).as(ExitCode.Error))
+          .handleErrorWith(error => Console[IO].putStrLn(s"Error happened during execution: $error").as(ExitCode.Error))
       case Nil =>
         Console[IO]
           .putStrLn("Please start the app by passing the words' location as first argument")
           .as(ExitCode.Error)
     }
 
-  private def program[F[_]: Sync: ContextShift](filePath: Path)(blocker: Blocker): F[Unit] =
+  private def program[F[_]: Sync: ContextShift](fileLocation: String)(blocker: Blocker): F[Unit] =
     for {
+      filePath                                    <- Sync[F].delay(Paths.get(fileLocation))
       implicit0(lookUpTable: Ref[F, LookUpTable]) <- AnagramFinder.createLookUpTable(filePath, blocker)
       _                                           <- mainLoop
     } yield ()
