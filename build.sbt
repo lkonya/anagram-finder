@@ -15,9 +15,8 @@ lazy val `root` = (project in file("."))
       "-language:implicitConversions",
       "-language:postfixOps",
       "-Xlint",
-      "-Xlint:-byname-implicit", // disabled, too many false positives because of macros
       "-Xcheckinit",
-//      "-Xfatal-warnings",
+      "-Xfatal-warnings",
       "-Wdead-code",
       "-Wextra-implicit",
       "-Wmacros:both",
