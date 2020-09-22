@@ -1,50 +1,15 @@
 ThisBuild / scalaVersion := "2.13.3"
 
-lazy val `root` = (project in file("."))
-  .settings(
-    name := "anagram-finder",
-    version := "1.0",
-    scalacOptions ++= Seq(
-      "-deprecation",
-      "-encoding",
-      "UTF-8",
-      "-explaintypes",
-      "-unchecked",
-      "-feature",
-      "-language:higherKinds",
-      "-language:implicitConversions",
-      "-language:postfixOps",
-      "-Xlint",
-      "-Xcheckinit",
-      "-Xfatal-warnings",
-      "-Wdead-code",
-      "-Wextra-implicit",
-      "-Wmacros:both",
-      "-Wnumeric-widen",
-      "-Woctal-literal",
-      "-Wunused:imports",
-      "-Wunused:patvars",
-      "-Wunused:privates",
-      "-Wunused:locals",
-      "-Wunused:explicits",
-      "-Wunused:implicits",
-      "-Wunused:params",
-      "-Wunused:linted",
-      "-Wvalue-discard",
-      "-P:bm4:no-tupling:n",
-      "-Ymacro-annotations",
-      "-Ybackend-parallelism",
-      "8" // Enable paralellisation — change to desired number!
-    ),
-    libraryDependencies ++= Seq(
-      "org.typelevel" %% "cats-core"   % "2.2.0",
-      "org.typelevel" %% "cats-effect" % "2.2.0",
-      "org.scalatest" %% "scalatest"   % "3.2.2" % "test"
-    )
-  )
+val zioVersion = "1.0.1"
 
-Compile / doc / sources := Seq() // disable javadoc generation to speedup stage
+libraryDependencies ++= Seq(
+  "org.typelevel" %% "cats-core"         % "2.2.0",
+  "dev.zio"       %% "zio"               % zioVersion,
+  "dev.zio"       %% "zio-nio"           % "1.0.0-RC9",
+  "dev.zio"       %% "zio-test"          % zioVersion % "test",
+  "dev.zio"       %% "zio-test-sbt"      % zioVersion % "test",
+  "dev.zio"       %% "zio-test-magnolia" % zioVersion % "test"
+)
+
+testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
 Global / onChangedBuildSource := ReloadOnSourceChanges
-
-addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
-enablePlugins(JavaAppPackaging)

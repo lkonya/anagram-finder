@@ -18,5 +18,5 @@ Tha app requires the location of the text file that contains the words as first 
 After reading the file and processing its content, it's ready to look up anagrams based on user's input.
 If the user wants to quit, just give `q` as input.
 ```scala
-  sbt "runMain com.github.lkonya.anagramFinder.AnagramFinderApp /location/of/the/wordlist"
+  sbt "runMain com.github.lkonya.anagramFinder.Main src/main/resources/wordlist.txt"
 ```
